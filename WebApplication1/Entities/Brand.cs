@@ -5,15 +5,17 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Entities
 {
-    public class Officies
+    public class Brand
     {
-        public Officies()
+        public Brand()
         {
             Cars = new List<Car>();
+           CarModals = new List<CarModal>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public string City { get; set; }
+
         public List<Car> Cars { get; set; }
+        public List<CarModal> CarModals { get; set; }
     }
 }
