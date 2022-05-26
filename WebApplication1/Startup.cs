@@ -41,6 +41,7 @@ namespace WebApplication1
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RentaCarAPI", Version = "v1" });
+               
             });
 
             services.AddDbContext<RentaCarContext>(options =>

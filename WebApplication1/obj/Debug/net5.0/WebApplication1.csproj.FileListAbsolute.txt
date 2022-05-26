@@ -43,7 +43,6 @@ D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\bin\Debug\net5.0\r
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.csproj.AssemblyReference.cache
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.GeneratedMSBuildEditorConfig.editorconfig
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.AssemblyInfoInputs.cache
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.AssemblyInfo.cs
@@ -59,3 +58,4 @@ D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\W
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\ref\WebApplication1.dll
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.pdb
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.genruntimeconfig.cache
+D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.csproj.AssemblyReference.cache

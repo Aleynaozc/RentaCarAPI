@@ -19,10 +19,44 @@ namespace WebApplication1.Controllers
         {
             _rentaCarContext = rentaCarContext;
         }
+
         [HttpGet]
         public async Task<List<Officies>> Get()
         {
             return await _rentaCarContext.Officies.ToListAsync();
+
         }
+
+        [HttpGet("reservation")]
+        public async Task<List<Car>> Get(int? id)
+        {
+
+            return await _rentaCarContext.Cars.Where(o => o.Officies.Id == id)
+                                        .Include(o => o.FuelType)
+                                        .Include(o => o.TransmissionType )
+                                        .Include(o => o.Brand)
+                                       
+                                        .Include(o => o.Classification)
+                                        .Select(o =>
+                                          new Car()
+                                          {
+                                              Id = o.Id,
+                                              Price=o.Price,
+                                              ImgURL=o.ImgURL,
+
+                                              FuelType=o.FuelType,
+                                              TransmissionType=o.TransmissionType,
+                                              Brand = o.Brand,
+                                              Classification = o.Classification,
+                                            
+
+
+                                          }
+                                        )
+                .ToListAsync();
+        }
+
+
+
     }
 }
