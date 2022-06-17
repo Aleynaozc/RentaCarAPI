@@ -7,10 +7,8 @@ namespace WebApplication1.Entities
 {
     public class Car
     {
-        
         public int Id { get; set; }
         public double Price { get; set; }
-        public string ImgURL { get; set; }
         public Brand Brand { get; set; }
         public Officies Officies { get; set; }
         public CarModal CarModal { get; set; }

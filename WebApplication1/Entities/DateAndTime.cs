@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Entities
 {
-    public class RentedCar
+    public class DateAndTime
     {
         public int Id { get; set; }
-        public Car Car { get; set; }
-        public User User { get; set; }
+        public int PickUpDate { get; set; }
+        public int DropOffDate { get; set; }
     }
 }

@@ -59,3 +59,5 @@ D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\r
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.pdb
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.genruntimeconfig.cache
 D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\obj\Debug\net5.0\WebApplication1.csproj.AssemblyReference.cache
+D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\bin\Debug\net5.0\BCrypt.Net-Next.dll
+D:\Visual Studio\ReantaCarAPI\WebApplication1\WebApplication1\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

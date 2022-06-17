@@ -12,6 +12,7 @@ namespace WebApplication1.Entities
             Cars = new List<Car>();
         }
         public int Id { get; set; }
+        public string? Slug { get; set; }
         public string Name { get; set; }
         public string City { get; set; }
         public List<Car> Cars { get; set; }

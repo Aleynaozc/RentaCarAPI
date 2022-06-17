@@ -20,6 +20,7 @@ namespace WebApplication1.Data
         public DbSet<FuelType> FuelTypes { get; set; }
         public DbSet<RentedCar> RentedCars { get; set; }
         public DbSet<TransmissionType> TransmissionTypes { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users{ get; set; }
+       
     }
 }

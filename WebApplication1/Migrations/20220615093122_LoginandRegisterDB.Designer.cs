@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Data;
 
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(RentaCarContext))]
-    partial class RentaCarContextModelSnapshot : ModelSnapshot
+    [Migration("20220615093122_LoginandRegisterDB")]
+    partial class LoginandRegisterDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,6 +137,24 @@ namespace WebApplication1.Migrations
                     b.ToTable("FuelTypes");
                 });
 
+            modelBuilder.Entity("WebApplication1.Entities.Login", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Password")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logins");
+                });
+
             modelBuilder.Entity("WebApplication1.Entities.Officies", b =>
                 {
                     b.Property<int>("Id")
@@ -154,6 +174,27 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Officies");
+                });
+
+            modelBuilder.Entity("WebApplication1.Entities.Register", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Password")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Registers");
                 });
 
             modelBuilder.Entity("WebApplication1.Entities.RentedCar", b =>
@@ -191,30 +232,6 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TransmissionTypes");
-                });
-
-            modelBuilder.Entity("WebApplication1.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("WebApplication1.Entities.Car", b =>
@@ -271,7 +288,7 @@ namespace WebApplication1.Migrations
                         .WithMany()
                         .HasForeignKey("CarId");
 
-                    b.HasOne("WebApplication1.Entities.User", "User")
+                    b.HasOne("WebApplication1.Entities.Register", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
