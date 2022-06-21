@@ -26,22 +26,22 @@ namespace WebApplication1.Controllers
             _rentaCarContext = rentaCarContext;
             _jwtService = jwtService; 
         }
-        [AllowAnonymous]
-        [HttpPost("Register")]
-        public IActionResult Register(User users)
-        {
-            var user = new User
-            {
-                FullName = users.FullName,
-                Email = users.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(users.Password)
-            };
-            _rentaCarContext.Users.Add(user);
-            _rentaCarContext.SaveChanges();
-            return Ok(user);
-            //return Created(uri: "success", value: (_rentaCarContext.Users.Add(user)user.Id = _rentaCarContext.SaveChanges()));
+        //[AllowAnonymous]
+        //[HttpPost("Register")]
+        //public IActionResult Register(User users)
+        //{
+        //    var user = new User
+        //    {
+        //        FullName = users.FullName,
+        //        Email = users.Email,
+        //        Password = BCrypt.Net.BCrypt.HashPassword(users.Password)
+        //    };
+        //    _rentaCarContext.Users.Add(user);
+        //    _rentaCarContext.SaveChanges();
+        //    return Ok(user);
+        //    //return Created(uri: "success", value: (_rentaCarContext.Users.Add(user)user.Id = _rentaCarContext.SaveChanges()));
         
-        }
+        //}
         //[HttpPost("Login")]
         //public IActionResult Login([FromBody] LoginDTO values)
         //{
@@ -61,33 +61,33 @@ namespace WebApplication1.Controllers
 
         //    return Ok(jwt);
         //}
-        [HttpGet("User")]
-        public IActionResult User()
-        {
-            try
-            {
-                var jwt= Request.Cookies["jwt"];
-                var token = _jwtService.Verify(jwt);
-                int userId = int.Parse(token.Issuer);
-                var user = _rentaCarContext.Users.FirstOrDefault(e => e.Id == userId);
-                return Ok(user);
-            }
-          catch (Exception _)
-            {
-                return Unauthorized();
-            }
+        //[HttpGet("User")]
+        //public IActionResult User()
+        //{
+        //    try
+        //    {
+        //        var jwt= Request.Cookies["jwt"];
+        //        var token = _jwtService.Verify(jwt);
+        //        int userId = int.Parse(token.Issuer);
+        //        var user = _rentaCarContext.Users.FirstOrDefault(e => e.Id == userId);
+        //        return Ok(user);
+        //    }
+        //  catch (Exception _)
+        //    {
+        //        return Unauthorized();
+        //    }
            
-        }
-        [HttpPost("Logout")]
-        public IActionResult Logout()
-        {
-            Response.Cookies.Delete(key: "jwt");
-            return Ok (new
-            {
-                message = "success"
-            });
+        //}
+        //[HttpPost("Logout")]
+        //public IActionResult Logout()
+        //{
+        //    Response.Cookies.Delete(key: "jwt");
+        //    return Ok (new
+        //    {
+        //        message = "success"
+        //    });
                 
-        }
+        //}
     }
 
    

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -56,6 +57,7 @@ namespace WebApplication1.Controllers
 
         //Araç tablosundaki Bütün araçları listeliyor.
         [HttpGet("Listcar")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<List<Car>> ListCar()
         {
             return await _rentaCarContext.Cars

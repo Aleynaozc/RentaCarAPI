@@ -26,9 +26,9 @@ namespace WebApplication1.Controllers
             _rentaCarContext = rentaCarContext;
             _config = config;
         }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO loginResource)
+       
+        [HttpPost("Userlogin")]
+        public async Task<IActionResult> UserLogin([FromBody] LoginDTO loginResource)
         {
             var findedUser = _rentaCarContext.Users.FirstOrDefault(e => e.Email == loginResource.Email);
             if (findedUser == null)
@@ -43,7 +43,7 @@ namespace WebApplication1.Controllers
             var key = Encoding.ASCII.GetBytes(_config["JWT:Key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Audience = "QuizAppApi",
+                Audience = "rentacar",
                 Issuer = "issuer",
                 Subject = new ClaimsIdentity(
                     new Claim[]{
@@ -61,6 +61,41 @@ namespace WebApplication1.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
             return Ok(tokenString);
+        }
+ 
+        [HttpPost("Adminlogin")]
+        public async Task<IActionResult> AdminLogin([FromBody]AdminLoginDTO adminLoginResource)
+        {
+            var findedAdmin= _rentaCarContext.Admins.FirstOrDefault(e => e.FullName == adminLoginResource.FullName);
+            if (findedAdmin == null)
+                return BadRequest("Kullanıcı bulunamadı!");
+
+            //if (!BCrypt.Net.BCrypt.Verify(adminLoginResource.Password, findedAdmin.Password))
+            //    return BadRequest("Kullanıcı adı veya şifre hatalı!");
+
+
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config["JWT:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Audience = "rentacar",
+                Issuer = "issuer",
+                Subject = new ClaimsIdentity(
+                    new Claim[]{
+                             new Claim(ClaimTypes.Name, findedAdmin.FullName),
+                             new Claim("Role", findedAdmin.Role.ToString())
+                    }
+                ),
+                Expires = DateTime.UtcNow.AddDays(1),
+
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return Ok(ResponseResource.GenerateResponse(new LoginResponseResource() { Token = tokenString, Role = (int)findedAdmin.Role }));
         }
     }
 }

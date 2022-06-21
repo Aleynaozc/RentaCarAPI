@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebApplication1.Data;
 using WebApplication1.DTOs;
 using WebApplication1.Entities;
+using WebApplication1.Helpers;
 
 namespace WebApplication1.Controllers
 {
@@ -21,19 +22,34 @@ namespace WebApplication1.Controllers
             
         }
         [HttpPost("Register")]
+        
         public IActionResult Register(SaveUserDTO users)
         {
             var user = new User
             {
                 FullName = users.FullName,
                 Email = users.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(users.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(users.Password),
+                 Role = UserRole.USER
             };
             _rentaCarContext.Users.Add(user);
             _rentaCarContext.SaveChanges();
             return Ok(user);
            
 
+        }
+        [HttpPost("AdminRegister")]
+        public IActionResult AdminRegister(SaveUserDTO users)
+        {
+            var admin = new Admin
+            {
+                FullName = users.FullName,
+              
+                Password = BCrypt.Net.BCrypt.HashPassword(users.Password)
+            };
+            _rentaCarContext.Admins.Add(admin);
+            _rentaCarContext.SaveChanges();
+            return Ok(admin);
         }
     }
 }
