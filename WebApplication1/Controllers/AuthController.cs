@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
                 Subject = new ClaimsIdentity(
                     new Claim[]{
                              new Claim(ClaimTypes.Name, findedUser.FullName),
-                             new Claim(ClaimTypes.Email, findedUser.Email),
+                              new Claim(ClaimTypes.Email, findedUser.Email),
                              new Claim("Role", findedUser.Role.ToString())
                     }
                 ),
@@ -60,13 +60,13 @@ namespace WebApplication1.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(tokenString);
+            return Ok(ResponseResource.GenerateResponse(new LoginResponseResource() { Token = tokenString, Role = (int)findedUser.Role }));
         }
- 
+
         [HttpPost("Adminlogin")]
-        public async Task<IActionResult> AdminLogin([FromBody]AdminLoginDTO adminLoginResource)
+        public async Task<IActionResult> AdminLogin([FromBody] AdminLoginDTO adminLoginResource)
         {
-            var findedAdmin= _rentaCarContext.Admins.FirstOrDefault(e => e.FullName == adminLoginResource.FullName);
+            var findedAdmin = _rentaCarContext.Admins.FirstOrDefault(e => e.FullName == adminLoginResource.FullName);
             if (findedAdmin == null)
                 return BadRequest("Kullanıcı bulunamadı!");
 

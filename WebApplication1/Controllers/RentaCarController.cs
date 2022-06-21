@@ -57,7 +57,7 @@ namespace WebApplication1.Controllers
 
         //Araç tablosundaki Bütün araçları listeliyor.
         [HttpGet("Listcar")]
-        [Authorize(Policy = "AdminPolicy")]
+        
         public async Task<List<Car>> ListCar()
         {
             return await _rentaCarContext.Cars
