@@ -36,8 +36,8 @@ namespace WebApplication1.Controllers
             return await _rentaCarContext.Cars.Where(o => o.Officies.Name == location)
                                         .Include(o => o.FuelType)
                                         .Include(o => o.TransmissionType)
-                                        .Include(o => o.Brand)
-                                        .Include(o => o.CarModal)
+                                        
+                                        .Include(o => o.CarModal).ThenInclude(o=>o.Brand)
                                         .Include(o => o.Officies)
                                         .Include(o => o.Classification)
                                         .Select(o => new Car()
@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
                                             Officies = o.Officies,
                                             FuelType = o.FuelType,
                                             TransmissionType = o.TransmissionType,
-                                            Brand = o.Brand,
+                                     
                                             Classification = o.Classification,
                                         }).ToListAsync();
         }
@@ -61,16 +61,16 @@ namespace WebApplication1.Controllers
         public async Task<List<Car>> ListCar()
         {
             return await _rentaCarContext.Cars
+                                        .Include(o => o.CarModal).ThenInclude(o => o.Brand)
                                         .Select(o => new Car()
                                         {
                                             Id = o.Id,
                                             Price = o.Price,
-                                            Brand = o.Brand,
                                             Officies = o.Officies,
                                             CarModal = o.CarModal,
                                             FuelType = o.FuelType,
+                                          
                                             TransmissionType = o.TransmissionType,
-                                        
                                             Classification = o.Classification,
                                         }).ToListAsync();
 
@@ -87,7 +87,7 @@ namespace WebApplication1.Controllers
             {
                 Id = o.Id,
                 Price = o.Price,
-                Brand = o.Brand,
+              
                 Officies = o.Officies,
                 CarModal = o.CarModal,
                 FuelType = o.FuelType,
