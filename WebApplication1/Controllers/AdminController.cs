@@ -26,12 +26,50 @@ namespace WebApplication1.Controllers
         {
             return await _rentaCarContext.Users.Select(u => new User()
             {
+                Id=u.Id,
                 FullName = u.FullName,
                 Email = u.Email,
                 Password = u.Password
             }).ToListAsync();
         }
+        [HttpGet("UpdateUser")]
+        public IActionResult UpdateUser(int id)
+        {
+            var selectedUser = _rentaCarContext.Users.Where(t => t.Id == id).Select(o => new User()
+            {
+                Id = o.Id,
+                FullName = o.FullName,
+                Email = o.Email,
+            }).FirstOrDefault();
 
+            return Ok(selectedUser);
+        }
+
+        [HttpPost("UpdatedUser")]
+        public IActionResult UpdatedUser(SaveUserDTO user, int id)
+        {
+            var updatedUser = _rentaCarContext.Users.SingleOrDefault(t => t.Id == id);
+            updatedUser.FullName = user.FullName;
+            updatedUser.Email = user.Email;
+            _rentaCarContext.Users.Update(updatedUser);
+            _rentaCarContext.SaveChanges();
+            return Ok(updatedUser);
+        }
+
+        [HttpDelete("DeleteUser")]
+        public IActionResult DeleteUser(int id)
+        {
+
+            var deletedUser = _rentaCarContext.Users
+                                   .Where(b => b.Id == id)
+                                   .FirstOrDefault();
+
+
+            _rentaCarContext.Users.Remove(deletedUser);
+            _rentaCarContext.SaveChanges();
+            return Ok(deletedUser);
+
+        }
         [HttpGet("AllCars")]
         public async Task<List<Car>> ListCar()
         {

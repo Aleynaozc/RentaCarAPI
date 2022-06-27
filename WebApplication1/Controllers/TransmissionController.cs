@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,15 @@ namespace WebApplication1.Controllers
         public TransmissionController(RentaCarContext rentaCarContext)
         {
             _rentaCarContext = rentaCarContext;
+        }
+        [HttpGet("TransmissionTypeList")]
+        public async Task<List<TransmissionType>> TransmissionTypeList()
+        {
+            return await _rentaCarContext.TransmissionTypes.Select(t => new TransmissionType()
+            {
+                Id = t.Id,
+                Type = t.Type,
+            }).ToListAsync();
         }
 
         [HttpPost("SaveTrasmissionType")]

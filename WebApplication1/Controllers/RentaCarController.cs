@@ -69,7 +69,6 @@ namespace WebApplication1.Controllers
                                             Officies = o.Officies,
                                             CarModal = o.CarModal,
                                             FuelType = o.FuelType,
-                                          
                                             TransmissionType = o.TransmissionType,
                                             Classification = o.Classification,
                                         }).ToListAsync();
@@ -82,7 +81,7 @@ namespace WebApplication1.Controllers
         public async Task<List<Car>> ListOneCar(int? searchId )
 
         {
-            return await _rentaCarContext.Cars.Where(o => o.Id == searchId)
+            return await _rentaCarContext.Cars.Where(o => o.Id == searchId).Include(o => o.CarModal).ThenInclude(o => o.Brand)
                 .Select(o => new Car()
             {
                 Id = o.Id,

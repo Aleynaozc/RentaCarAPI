@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,15 @@ namespace WebApplication1.Controllers
         public FuelTypeController(RentaCarContext rentaCarContext)
         {
             _rentaCarContext = rentaCarContext;
+        }
+        [HttpGet("FuelTypeList")]
+        public async Task<List<FuelType>> FuelTypeList()
+        {
+            return await _rentaCarContext.FuelTypes.Select(f => new FuelType()
+            {
+                Id = f.Id,
+                Type = f.Type,
+            }).ToListAsync();
         }
 
         [HttpPost("SaveFuelType")]

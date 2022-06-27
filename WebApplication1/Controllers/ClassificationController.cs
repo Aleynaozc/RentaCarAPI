@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,15 @@ namespace WebApplication1.Controllers
         {
             _rentaCarContext = rentaCarContext;
         }
-
+        [HttpGet("ClassificationList")]
+        public async Task<List<Classification>> ClassificationList()
+        {
+            return await _rentaCarContext.Classifications.Select(u => new Classification()
+            {
+                Id = u.Id,
+                Type = u.Type,
+            }).ToListAsync();
+        }
         [HttpPost("SaveClassification")]
         public IActionResult SaveClassification(SaveClassificationDTO clas)
         {

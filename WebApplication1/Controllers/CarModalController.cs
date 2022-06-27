@@ -21,6 +21,19 @@ namespace WebApplication1.Controllers
             _rentaCarContext = rentaCarContext;
         }
 
+        [HttpGet("CarModalList")]
+        public async Task<List<CarModal>> CarModalList()
+        {
+            return await _rentaCarContext.CarModals.Select(cm => new CarModal()
+            {
+                Id=cm.Id,
+                Name = cm.Name,
+                ImgURL = cm.ImgURL,
+                ImgURL2 = cm.ImgURL2,
+                Brand = cm.Brand
+
+            }).ToListAsync();
+        }
         [HttpPost("SaveCarModal")]
         public IActionResult SaveCarModal(SaveCarModalDTO carModal)
         {
