@@ -28,30 +28,53 @@ namespace WebApplication1.Controllers
             return await _rentaCarContext.Officies.ToListAsync();
         }
 
+        [HttpGet("rentedCarList")]
+        public async Task<List<RentedCar>> rentedCarList()
+        {
+            
+            DateTime dts = new DateTime(2022, 6, 27);
+            DateTime dte = new DateTime(2022, 6, 30);
 
-        //Araç tablosunda Seçtiğimiz ofise göre araçları listeliyor.
+            var zamanfarki = dte - dts;
+            Console.WriteLine(zamanfarki);
+
+            return await _rentaCarContext.RentedCars.Where(o=>o.EndTimeAndDate<= dts || o.StartTimeAndDate>=dte).ToListAsync();
+        }
+
+        //Araç tablosunda Seçtiğimiz ofise göre araçları listeliyor.z
         [HttpGet("reservation")]
         public async Task<List<Car>> Get(string? location)
         {
-            return await _rentaCarContext.Cars.Where(o => o.Officies.Name == location)
+            DateTime dts = new DateTime(2022, 6, 27);
+            DateTime dte = new DateTime(2022, 6, 23);
+
+            var zamanfarki = dte - dts;
+            Console.WriteLine(zamanfarki);
+
+            var filtcarlist = _rentaCarContext.RentedCars.ToListAsync();
+
+
+            return await _rentaCarContext.Cars.Where(o => o.Officies.Name == location ) 
                                         .Include(o => o.FuelType)
                                         .Include(o => o.TransmissionType)
-                                        
-                                        .Include(o => o.CarModal).ThenInclude(o=>o.Brand)
+                                        .Include(o => o.CarModal).ThenInclude(o => o.Brand)
                                         .Include(o => o.Officies)
                                         .Include(o => o.Classification)
                                         .Select(o => new Car()
                                         {
                                             Id = o.Id,
                                             Price = o.Price,
-                                          
                                             CarModal = o.CarModal,
                                             Officies = o.Officies,
                                             FuelType = o.FuelType,
                                             TransmissionType = o.TransmissionType,
-                                     
+
                                             Classification = o.Classification,
                                         }).ToListAsync();
+             
+
+
+
         }
 
 
@@ -60,6 +83,9 @@ namespace WebApplication1.Controllers
         
         public async Task<List<Car>> ListCar()
         {
+
+            
+
             return await _rentaCarContext.Cars
                                         .Include(o => o.CarModal).ThenInclude(o => o.Brand)
                                         .Select(o => new Car()

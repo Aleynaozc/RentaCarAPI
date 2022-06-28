@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("UpdatedUser")]
-        public IActionResult UpdatedUser(SaveUserDTO user, int id)
+        public IActionResult UpdatedUser([FromBody] SaveUserDTO user, int id)
         {
             var updatedUser = _rentaCarContext.Users.SingleOrDefault(t => t.Id == id);
             updatedUser.FullName = user.FullName;

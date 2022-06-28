@@ -8,7 +8,9 @@ namespace WebApplication1.Entities
     public class RentedCar
     {
         public int Id { get; set; }
-        public Car Car { get; set; }
+        public int CarId { get; set; }
         public User User { get; set; }
+        public DateTime StartTimeAndDate { get; set; }
+        public DateTime EndTimeAndDate { get; set; }
     }
 }
