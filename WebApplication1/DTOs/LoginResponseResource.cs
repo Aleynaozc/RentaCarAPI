@@ -9,5 +9,6 @@ namespace WebApplication1.DTOs
     {
         public string Token { get; set; }
         public int Role { get; set; }
+        public int UserId { get; set; }
     }
 }

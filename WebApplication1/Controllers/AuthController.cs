@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
         }
        
         [HttpPost("Userlogin")]
-        public async Task<IActionResult> UserLogin([FromBody] LoginDTO loginResource)
+        public async Task<IActionResult> UserLogin([FromBody] LoginDTO loginResource )
         {
             var findedUser = _rentaCarContext.Users.FirstOrDefault(e => e.Email == loginResource.Email);
             if (findedUser == null)
@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(ResponseResource.GenerateResponse(new LoginResponseResource() { Token = tokenString, Role = (int)findedUser.Role }));
+            return Ok(ResponseResource.GenerateResponse(new LoginResponseResource() { Token = tokenString, Role = (int)findedUser.Role , UserId = findedUser.Id}));
         }
 
         [HttpPost("Adminlogin")]

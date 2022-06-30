@@ -9,7 +9,7 @@ namespace WebApplication1.Entities
     {
         public int Id { get; set; }
         public int CarId { get; set; }
-        public User User { get; set; }
+        public int UserId { get; set; }
         public DateTime StartTimeAndDate { get; set; }
         public DateTime EndTimeAndDate { get; set; }
     }

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Data;
+using WebApplication1.DTOs;
 using WebApplication1.Entities;
 
 namespace WebApplication1.Controllers
@@ -28,33 +30,51 @@ namespace WebApplication1.Controllers
             return await _rentaCarContext.Officies.ToListAsync();
         }
 
-        [HttpGet("rentedCarList")]
+        [HttpPost("PostrentedCarList")]
+        public IActionResult PostrentedCarList(RentedCarDTO rentedcar)
+        {
+
+            var newRentedCar = new RentedCar();
+          
+                newRentedCar.CarId = rentedcar.CarID;
+                newRentedCar.UserId= rentedcar.UserID;
+                newRentedCar.StartTimeAndDate = rentedcar.StartTime;
+                newRentedCar.EndTimeAndDate = rentedcar.EndTime;
+
+            _rentaCarContext.RentedCars.Add(newRentedCar);
+            _rentaCarContext.SaveChanges();
+            return Ok(newRentedCar);
+
+            
+        }
+        [HttpGet(" rentedCarList")]
         public async Task<List<RentedCar>> rentedCarList()
         {
-            
-            DateTime dts = new DateTime(2022, 6, 27);
-            DateTime dte = new DateTime(2022, 6, 30);
+
+            DateTime dts = new DateTime(2022, 6, 30);
+            DateTime dte = new DateTime(2022, 7, 3);
 
             var zamanfarki = dte - dts;
             Console.WriteLine(zamanfarki);
 
-            return await _rentaCarContext.RentedCars.Where(o=>o.EndTimeAndDate<= dts || o.StartTimeAndDate>=dte).ToListAsync();
+            return await _rentaCarContext.RentedCars.Where(o => o.EndTimeAndDate <= dts || o.StartTimeAndDate >= dte).ToListAsync();
         }
-
-        //Araç tablosunda Seçtiğimiz ofise göre araçları listeliyor.z
+        //Araç tablosunda Seçtiğimiz ofise göre araçları listeliyor.
         [HttpGet("reservation")]
-        public async Task<List<Car>> Get(string? location)
+        public async Task<List<Car>> Get(string? location, DateTime dts, DateTime dte)
         {
-            DateTime dts = new DateTime(2022, 6, 27);
-            DateTime dte = new DateTime(2022, 6, 23);
+            //DateTime dts = new DateTime(startDate);
+            //DateTime dte = new DateTime(endDate);
 
-            var zamanfarki = dte - dts;
-            Console.WriteLine(zamanfarki);
+            //var yvz = reservation.StartDate;
+            //var ale = reservation.EndDate;
+            //List<RentedCar> rentC = new List<RentedCar>();
+           
 
-            var filtcarlist = _rentaCarContext.RentedCars.ToListAsync();
-
-
-            return await _rentaCarContext.Cars.Where(o => o.Officies.Name == location ) 
+            var rentC = await _rentaCarContext.RentedCars.Where(o => !(o.EndTimeAndDate <= dts || o.StartTimeAndDate >= dte)).ToListAsync();
+            var result = !rentC.Any(r => r.CarId == 1);
+            //.Where(o => !rentC.Any(r => r.CarId != o.Id)
+            var Carlist = await _rentaCarContext.Cars.Where(o => o.Officies.Name.ToLower().Contains(location.ToLower()))
                                         .Include(o => o.FuelType)
                                         .Include(o => o.TransmissionType)
                                         .Include(o => o.CarModal).ThenInclude(o => o.Brand)
@@ -71,7 +91,10 @@ namespace WebApplication1.Controllers
 
                                             Classification = o.Classification,
                                         }).ToListAsync();
-             
+
+
+            Carlist = Carlist.Where(c => !rentC.Any(l => l.CarId == c.Id)).ToList();
+            return (Carlist);
 
 
 
